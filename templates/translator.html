@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>VoxNest Translator</title>
+
+<link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+
+<link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+<link href="https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.bootstrap5.min.css" rel="stylesheet">
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='css/style.css') }}">
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='css/translator.css') }}">
+
+</head>
+
+<body>
+
+<nav class="translator-navbar">
+
+<div class="container">
+
+<a href="/" class="back-btn">
+
+<i class="bi bi-arrow-left"></i>
+
+Home
+
+</a>
+
+<button
+    id="theme-toggle"
+    type="button"
+    title="Toggle theme"
+    aria-label="Toggle light and dark theme">
+
+<i class="bi bi-moon-fill"></i>
+
+</button>
+
+</div>
+
+</nav>
+
+<section class="translator-page">
+
+<div class="container">
+
+<div class="text-center">
+
+<span class="badge-custom">
+
+🌿 AI Voice Translator
+
+</span>
+
+<h1 class="translator-title">
+
+Translate Your Voice
+
+</h1>
+
+<p class="translator-subtitle">
+
+Record your voice or upload an audio file,
+translate it into multiple languages,
+and generate natural AI voices.
+
+</p>
+
+</div>
+<!-- ==========================
+     RECORDING CARD
+========================== -->
+
+<div class="record-card mt-5">
+
+    <div class="text-center">
+
+        <div class="record-icon">
+
+            <i class="bi bi-mic-fill"></i>
+
+        </div>
+
+        <h3 class="mt-4">
+
+            Record Your Voice
+
+        </h3>
+
+        <p class="record-text">
+
+            Click Start Recording to begin speaking.
+
+        </p>
+
+        <div class="timer">
+
+            <span id="recording-time">
+
+                00:00
+
+            </span>
+
+        </div>
+
+        <div class="record-buttons">
+
+            <button
+             id="start-record"
+             class="start-btn"
+             type="button"
+             title="Start recording"
+             aria-label="Start recording">
+
+                <i class="bi bi-record-circle-fill"></i>
+
+                Start Recording
+
+            </button>
+
+            <button
+             id="stop-record"
+             class="outline-btn"
+             type="button"
+             title="Stop recording"
+             aria-label="Stop recording">
+
+                <i class="bi bi-stop-circle-fill"></i>
+
+                Stop
+
+            </button>
+
+            <button
+                id="restart-record"
+                class="outline-btn"
+                type="button"
+                title="Restart recording"
+                aria-label="Restart recording">
+
+                <i class="bi bi-arrow-clockwise"></i>
+
+                Restart
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- ==========================
+     AUDIO PREVIEW
+========================== -->
+
+<div id="audio-preview-card" class="preview-card mt-5" style="display:none;">
+
+    <h3 class="text-center">
+
+        🎵 Recording Ready
+
+    </h3>
+
+    <p class="text-center">
+
+        Listen before translating.
+
+    </p>
+
+    <audio
+        id="audio-player"
+        controls
+        class="w-100 mt-4">
+    </audio>
+
+    <div class="preview-buttons mt-4">
+
+        <a
+            id="download-recording"
+            class="main-btn"
+            download="recording.webm">
+
+            <i class="bi bi-download"></i>
+
+            Download Recording
+
+        </a>
+
+        <button
+            id="delete-recording"
+            class="outline-btn"
+            type="button">
+
+            <i class="bi bi-trash"></i>
+
+            Delete Recording
+
+        </button>
+
+    </div>
+
+</div>
+<!-- ==========================
+     AUDIO UPLOAD
+========================== -->
+
+<div class="upload-card mt-5">
+
+    <div id="drop-zone">
+
+        <i class="bi bi-cloud-arrow-up-fill upload-icon"></i>
+
+        <h3>Drag & Drop Audio Here</h3>
+
+        <p>or</p>
+
+        <label for="audio-upload" class="browse-btn">
+
+            <i class="bi bi-folder2-open"></i>
+
+            Browse Audio Files
+
+        </label>
+
+        <input
+            type="file"
+            id="audio-upload"
+            accept=".mp3,.wav,.m4a,.webm,.ogg"
+            hidden>
+
+        <p class="supported">
+
+            Supported:
+            MP3 • WAV • M4A • WEBM • OGG
+
+        </p>
+
+    </div>
+
+</div>
+<!-- ==========================
+     LANGUAGE SELECTION
+========================== -->
+
+<div class="language-card mt-5">
+
+    <h2 class="text-center mb-4">
+
+        🌍 Translation Settings
+
+    </h2>
+
+    <!-- Source Language -->
+
+    <div class="mb-4">
+
+        <label class="form-label fw-bold">
+
+            Source Language
+
+        </label>
+
+        <select
+           id="source-language"
+           class="form-select"
+           title="Source language"
+           aria-label="Source language">
+        </select>
+
+    </div>
+
+    <!-- Target Language -->
+
+    <div class="mb-4">
+
+        <label class="form-label fw-bold">
+
+            Translate To
+
+        </label>
+
+        <select
+            id="target-language"
+            class="form-select"
+            title="Target language"
+            aria-label="Target language">
+        </select>
+
+    </div>
+
+    <div class="mb-4">
+
+        <label class="form-label fw-bold">
+
+            Choose AI Voice
+
+        </label>
+
+        <select
+            id="voice-id"
+            class="form-select">
+ 
+            <optgroup label="👩 Female Voices">
+
+                <option value="EXAVITQu4vr4xnSDxMaL">
+                Bella
+                </option>
+
+                <option value="21m00Tcm4TlvDq8ikWAM">
+                Rachel
+                </option>
+
+                <option value="AZnzlk1XvdvUeBnXmlld">
+                Domi
+                </option>
+
+                <option value="MF3mGyEYCl7XYWbV9V6O">
+                Elli
+                </option>
+
+                <option value="XB0fDUnXU5powFXDhCwa">
+                Charlotte
+                </option>
+
+            </optgroup>
+
+            <optgroup label="👨 Male Voices">
+
+                <option value="pNInz6obpgDQGcFmaJgB">
+                Adam
+                </option>
+
+                <option value="pqHfZKP75CvOlQylNhV4">
+                Bill
+                </option>
+
+                <option value="VR6AewLTigWG4xSOukaG">
+                Arnold
+                </option>
+
+                <option value="TxGEqnHWrfWFTfGW9XjX">
+                Josh
+                </option>
+
+                <option value="ErXwobaYiN019PkySvjV">
+                Antoni
+                </option>
+
+            </optgroup>
+
+        </select>
+
+    </div>
+
+    <div class="text-center mt-5">
+
+        <button
+            id="translate-btn"
+            class="translate-btn"
+            type="button"
+            title="Translate voice"
+            aria-label="Translate voice">
+
+            🌿 Translate Voice
+
+        </button>
+
+    </div>
+</div>
+<!-- ==========================
+     TRANSLATION RESULTS
+========================== -->
+
+<div id="translation-results" class="results-card mt-5" style="display:none;">
+
+    <h2 class="text-center mb-5">
+
+        🌿 Translation Results
+
+    </h2>
+    <div class="alert alert-success text-center mb-4">
+
+        <strong>Detected Language:</strong>
+
+        <span id="detected-language">
+
+        -
+
+        </span>
+
+    </div>
+
+    <!-- Original Transcript -->
+
+    <div class="result-box">
+
+        <div class="result-header">
+
+            <h4>
+
+                📝 Original Transcript
+
+            </h4>
+
+            <button
+               id="copy-original"
+               class="copy-btn"
+               type="button">
+
+               <i class="bi bi-copy"></i>
+
+                Copy
+
+            </button>
+
+        </div>
+        <div id="original-text" class="result-content">
+
+            Your original transcript will appear here...
+
+        </div>
+
+    </div>
+
+    <!-- Translated Transcript -->
+
+    <div class="result-box mt-4">
+
+        <div class="result-header">
+
+            <h4>
+
+                🌍 Translated Transcript
+
+            </h4>
+
+            <button
+                id="copy-translation"
+                class="copy-btn"
+                type="button">
+
+                <i class="bi bi-copy"></i>
+
+                Copy
+
+            </button>
+
+        </div>
+
+        <div id="translated-text" class="result-content">
+
+            Your translated transcript will appear here...
+
+        </div>
+
+    </div>
+
+    <!-- AI Voice -->
+
+    <div class="result-box mt-4">
+
+        <h4>
+
+            🔊 AI Voice
+
+        </h4>
+
+        <audio
+            id="translated-audio"
+            controls
+            class="w-100 mt-3">
+        </audio>
+
+        <div class="text-center mt-4">
+
+            <a
+                id="download-ai-audio"
+                class="browse-btn"
+                download>
+
+                <i class="bi bi-download"></i>
+
+                Download AI Voice
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- ==========================
+     LOADING OVERLAY
+========================== -->
+
+<div id="loading-overlay">
+
+    <div class="loading-card">
+
+        <div class="spinner-border text-success mb-4"
+             role="status"></div>
+
+        <h3 id="loading-title">
+
+            🌿 VoxNest AI is Working...
+
+        </h3>
+
+        <p id="loading-status">
+
+            Preparing...
+
+        </p>
+
+        <div class="progress mt-4">
+
+            <div
+                id="progress-bar"
+                class="progress-bar progress-bar-striped progress-bar-animated"
+                style="width:0%">
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script>
+
+<script src="{{ url_for('static', filename='js/languages.js') }}"></script>
+
+<script src="{{ url_for('static', filename='js/recorder.js') }}"></script>
+
+<script src="{{ url_for('static', filename='js/translate.js') }}"></script>
+
+<script src="{{ url_for('static', filename='js/copy.js') }}"></script>
+
+</body>

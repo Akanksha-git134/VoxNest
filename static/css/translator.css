@@ -1,0 +1,635 @@
+.translator-page{
+
+padding:70px 0;
+
+min-height:100vh;
+
+background:#f8faf8;
+
+}
+
+.translator-navbar{
+
+background:white;
+
+padding:18px 0;
+
+box-shadow:0 2px 12px rgba(0,0,0,.08);
+
+position:sticky;
+
+top:0;
+
+z-index:1000;
+
+}
+
+.translator-navbar .container{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+}
+
+.back-btn{
+
+text-decoration:none;
+
+color:#31572C;
+
+font-weight:600;
+
+font-size:18px;
+
+}
+
+.back-btn:hover{
+
+color:#132A13;
+
+}
+
+#theme-toggle{
+
+border:none;
+
+background:white;
+
+width:45px;
+
+height:45px;
+
+border-radius:50%;
+
+box-shadow:0 4px 10px rgba(0,0,0,.08);
+
+}
+
+.translator-title{
+
+font-size:55px;
+
+font-weight:700;
+
+color:#132A13;
+
+margin-top:20px;
+
+}
+
+.translator-subtitle{
+
+max-width:700px;
+
+margin:auto;
+
+margin-top:20px;
+
+font-size:18px;
+
+color:#666;
+
+line-height:1.8;
+
+}
+/* ==========================
+   RECORD CARD
+========================== */
+
+.record-card{
+
+    background:white;
+
+    max-width:850px;
+
+    margin:auto;
+
+    padding:50px;
+
+    border-radius:30px;
+
+    box-shadow:0 20px 50px rgba(0,0,0,.08);
+
+}
+
+.record-icon{
+
+    width:120px;
+
+    height:120px;
+
+    margin:auto;
+
+    border-radius:50%;
+
+    background:linear-gradient(
+        135deg,
+        #31572C,
+        #90A955
+    );
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    color:white;
+
+    font-size:50px;
+
+}
+
+.record-text{
+
+    color:#666;
+
+    margin-top:15px;
+
+}
+
+.timer{
+
+    font-size:40px;
+
+    font-weight:700;
+
+    color:#132A13;
+
+    margin:30px 0;
+
+}
+
+.record-buttons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+.record-buttons button{
+    min-width: 190px;
+    height: 55px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 16px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+.record-buttons .outline-btn{
+    background: white;
+    color: #31572C;
+    border: 2px solid #31572C;
+    transition: 0.3s;
+}
+
+.record-buttons .outline-btn:hover{
+    background: #31572C;
+    color: white;
+}
+.start-btn{
+    min-width: 190px;
+    height: 55px;
+
+    border: none;
+    border-radius: 50px;
+
+    background: linear-gradient(135deg,#31572C,#90A955);
+    color: white;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+
+    transition: 0.3s;
+}
+
+.start-btn:hover{
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(49,87,44,.35);
+}
+
+@media(max-width:768px){
+
+    .record-card{
+        padding:30px 20px;
+    }
+
+    .record-icon{
+        width:90px;
+        height:90px;
+        font-size:40px;
+    }
+
+    .timer{
+        font-size:32px;
+    }
+
+    .record-buttons{
+        flex-direction:column;
+    }
+
+    .record-buttons button{
+        width:100%;
+    }
+
+}
+/* ==========================
+   AUDIO PREVIEW
+========================== */
+
+.preview-card{
+
+    background:white;
+
+    max-width:850px;
+
+    margin:auto;
+
+    padding:45px;
+
+    border-radius:30px;
+
+    box-shadow:0 15px 40px rgba(0,0,0,.08);
+
+}
+
+.preview-buttons{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:20px;
+
+    flex-wrap:wrap;
+
+}
+
+.preview-buttons a,
+.preview-buttons button{
+
+    min-width:220px;
+
+    height:55px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:8px;
+
+}
+
+audio{
+
+    border-radius:15px;
+
+}
+/* ==========================
+   AUDIO UPLOAD
+========================== */
+
+.upload-card{
+
+    background:white;
+
+    max-width:850px;
+
+    margin:auto;
+
+    padding:50px;
+
+    border-radius:30px;
+
+    box-shadow:0 20px 50px rgba(0,0,0,.08);
+
+}
+
+#drop-zone{
+
+    border:3px dashed #90A955;
+
+    border-radius:25px;
+
+    padding:60px;
+
+    text-align:center;
+
+    transition:.3s;
+
+    cursor:pointer;
+
+}
+
+#drop-zone:hover{
+
+    background:#f5faef;
+
+}
+
+.upload-icon{
+
+    font-size:70px;
+
+    color:#4F772D;
+
+}
+
+.supported{
+
+    margin-top:20px;
+
+    color:#777;
+
+}
+/* ==========================
+   BROWSE BUTTON
+========================== */
+
+.browse-btn{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    min-width: 220px;
+    height: 55px;
+
+    padding: 0 25px;
+
+    border: 2px solid #31572C;
+    border-radius: 50px;
+
+    background: #ECF39E;
+    color: #132A13;
+
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+
+    transition: all 0.3s ease;
+}
+
+.browse-btn:hover{
+    background: #31572C;
+    color: #ECF39E;
+    transform: translateY(-2px);
+}
+
+/* ==========================
+   LANGUAGE CARD
+========================== */
+
+.language-card{
+    background:white;
+    max-width:850px;
+    margin:auto;
+    padding:45px;
+    border-radius:30px;
+    box-shadow:0 15px 40px rgba(0,0,0,.08);
+}
+
+.language-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:15px;
+    margin-top:20px;
+}
+
+.language-grid label{
+    background:#ECF39E;
+    padding:12px 18px;
+    border-radius:15px;
+    cursor:pointer;
+    transition:.3s;
+    color:#132A13;
+    font-weight:600;
+}
+
+.language-grid label:hover{
+    background:#90A955;
+    color:white;
+}
+
+.language-grid input{
+    margin-right:8px;
+}
+
+.translate-btn{
+    background:linear-gradient(135deg,#31572C,#90A955);
+    color:white;
+    border:none;
+    padding:16px 40px;
+    border-radius:50px;
+    font-size:18px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.translate-btn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 25px rgba(49,87,44,.35);
+}
+.form-select{
+    border-radius: 15px;
+    padding: 14px;
+    font-size: 16px;
+    border: 2px solid #90A955;
+    box-shadow: none;
+}
+
+.form-select:focus{
+    border-color: #31572C;
+    box-shadow: 0 0 10px rgba(49,87,44,0.2);
+}
+
+/* ==========================
+   TOM SELECT
+========================== */
+
+.ts-control{
+    border-radius:18px !important;
+    border:2px solid #90A955 !important;
+    padding:12px !important;
+    min-height:55px;
+}
+
+.ts-control.focus{
+    border-color:#31572C !important;
+    box-shadow:0 0 12px rgba(49,87,44,.2) !important;
+}
+
+.ts-dropdown{
+    border-radius:18px;
+    border:2px solid #90A955;
+}
+
+.ts-dropdown .active{
+    background:#31572C !important;
+    color:white !important;
+}
+/* ==========================
+   TRANSLATION RESULTS
+========================== */
+
+.results-card{
+
+    background:white;
+
+    max-width:900px;
+
+    margin:auto;
+
+    padding:50px;
+
+    border-radius:30px;
+
+    box-shadow:0 20px 50px rgba(0,0,0,.08);
+
+}
+
+.result-box{
+
+    background:#F8FAF5;
+
+    border-left:6px solid #4F772D;
+
+    border-radius:18px;
+
+    padding:25px;
+
+}
+
+.result-box h4{
+
+    color:#31572C;
+
+    margin-bottom:18px;
+
+}
+
+.result-content{
+
+    min-height:120px;
+
+    white-space:pre-wrap;
+
+    font-size:17px;
+
+    line-height:1.8;
+
+    color:#333;
+
+}
+/* ==========================
+   LOADING OVERLAY
+========================== */
+
+#loading-overlay{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(19,42,19,.75);
+
+    display:none;
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:9999;
+
+}
+
+.loading-card{
+
+    width:420px;
+
+    max-width:90%;
+
+    background:white;
+
+    border-radius:25px;
+
+    padding:40px;
+
+    text-align:center;
+
+    box-shadow:0 25px 60px rgba(0,0,0,.25);
+
+}
+
+.progress{
+
+    height:14px;
+
+    border-radius:20px;
+
+}
+
+.progress-bar{
+
+    background:#4F772D;
+
+}
+
+/* ==========================
+   RESULT HEADER
+========================== */
+
+.result-header{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-bottom:20px;
+
+flex-wrap:wrap;
+
+}
+
+.copy-btn{
+
+background:#31572C;
+
+color:white;
+
+border:none;
+
+padding:10px 20px;
+
+border-radius:12px;
+
+font-weight:600;
+
+transition:.3s;
+
+}
+
+.copy-btn:hover{
+
+background:#132A13;
+
+transform:translateY(-2px);
+
+}

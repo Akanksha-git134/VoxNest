@@ -1,0 +1,36 @@
+/* ===========================
+   VOXNEST DESIGN SYSTEM
+   =========================== */
+
+:root{
+
+    /* Brand Colors */
+    --primary:#132A13;
+    --secondary:#31572C;
+    --accent:#4F772D;
+    --olive:#90A955;
+    --cream:#ECF39E;
+
+    /* Neutral Colors */
+    --white:#FFFFFF;
+    --background:#F8FBF5;
+    --card:#FFFFFF;
+
+    /* Text */
+    --text:#243024;
+    --text-light:#5F6F5F;
+
+    /* Borders */
+    --border:#D8E5CC;
+
+    /* Shadow */
+    --shadow:0 12px 35px rgba(19,42,19,.08);
+
+    /* Radius */
+    --radius-sm:12px;
+    --radius-md:18px;
+    --radius-lg:28px;
+
+    /* Transition */
+    --transition:.35s ease;
+}
