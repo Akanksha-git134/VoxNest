@@ -1,7 +1,8 @@
 from google import genai
 from config import GEMINI_API_KEYS
 import json
-
+import time
+import subprocess
 
 class GeminiService:
 
@@ -28,9 +29,73 @@ class GeminiService:
 
     def transcribe_audio(self, audio_path):
 
+        import os
+
+        print("Audio Path:", audio_path)
+        print("File Exists:", os.path.exists(audio_path))
+        print("File Size:", os.path.getsize(audio_path))
+        
+        # ----------------------------------------
+        # Convert recorded WEBM to WAV
+        # ----------------------------------------
+
+        import os
+        import subprocess
+
+        extension = os.path.splitext(audio_path)[1].lower()
+
+        if extension != ".wav":
+
+            wav_path = os.path.splitext(audio_path)[0] + ".wav"
+
+            subprocess.run([
+                "ffmpeg",
+                "-y",
+                "-i",
+                audio_path,
+                wav_path
+            ], check=True)
+
+            print("Converted to:", wav_path)
+
+            audio_path = wav_path
+
+        print("Converted to:", audio_path)
+        
         uploaded_file = self.client.files.upload(
             file=audio_path
         )
+
+        max_attempts = 15
+        attempt = 0
+
+        while attempt < max_attempts:
+
+            file_info = self.client.files.get(
+                name=uploaded_file.name
+            )
+
+            print(file_info)
+            print("Gemini Status:", file_info.state)
+
+            state = str(file_info.state)
+
+            if state == "FileState.ACTIVE":
+                break
+
+            if state == "FileState.FAILED":
+                raise Exception(
+                    f"Gemini failed to process the uploaded audio.\n\nFile Info:\n{file_info}"
+                )
+
+            time.sleep(2)
+
+            attempt += 1
+
+        if attempt == max_attempts:
+            raise Exception(
+                "Gemini processing timed out."
+            )
 
         prompt = """
         Analyze this audio.

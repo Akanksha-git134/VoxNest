@@ -57,6 +57,11 @@ translateButton.addEventListener("click", async () => {
             targetLanguage
         );
         
+        console.log(
+            "Selected Voice ID:",
+            document.getElementById("voice-id").value
+        );
+
         formData.append(
             "voice_id",
             document.getElementById("voice-id").value
@@ -121,6 +126,22 @@ translateButton.addEventListener("click", async () => {
 
         document.getElementById        ("download-ai-audio").href =
         result.voice_url;
+
+        // ===============================
+        // RESET FOR NEXT TRANSLATION
+        // ===============================
+
+        currentAudio = null;
+
+        document.getElementById("audio-upload").value = "";
+
+        document.getElementById("audio-player").src = "";
+
+        document.getElementById("audio-preview-card").style.display = "none";
+
+        document.getElementById("start-record").disabled = false;
+
+        resetRecorder();
         
     } catch (error) {
 

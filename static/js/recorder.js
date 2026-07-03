@@ -63,6 +63,18 @@ function stopTimer(){
 
 }
 
+function resetRecorder() {
+
+    stopTimer();
+
+    seconds = 0;
+
+    timer.textContent = "00:00";
+
+    audioChunks = [];
+
+}
+
 // ===============================
 // START RECORDING
 // ===============================
@@ -78,7 +90,9 @@ startBtn.addEventListener("click", async ()=>{
 
             });
 
-        mediaRecorder = new MediaRecorder(recordingStream);
+        mediaRecorder = new MediaRecorder(recordingStream, {
+            mimeType: "audio/webm"
+        });
 
         audioChunks = [];
 
@@ -149,15 +163,9 @@ stopBtn.addEventListener("click", ()=>{
 // RESTART
 // ===============================
 
-restartBtn.addEventListener("click", ()=>{
+restartBtn.addEventListener("click", () => {
 
-    stopTimer();
-
-    seconds = 0;
-
-    timer.textContent = "00:00";
-
-    audioChunks = [];
+    resetRecorder();
 
 });
 
@@ -168,6 +176,10 @@ deleteBtn.addEventListener("click", () => {
     previewCard.style.display = "none";
 
     currentAudio = null;
+
+    uploadInput.value = "";
+
+    resetRecorder();
 
 });
 
