@@ -38,10 +38,22 @@ translateButton.addEventListener("click", async () => {
         return;
     }
 
+    if (currentAudio.size < 10000) {
+
+        alert(
+            "Recording is too short. Please record at least 1 second."
+        );
+
+        return;
+    } 
+
     try {
 
         showLoading();
 
+        translateButton.disabled = true;
+        
+        updateLoading("📤 Uploading audio...", 10);
         updateLoading("🎤 Uploading Audio...", 25);
 
         const formData = new FormData();
@@ -73,32 +85,70 @@ translateButton.addEventListener("click", async () => {
             currentAudio.name || "recording.webm"
         );
 
-        const response = await fetch("/upload-audio", {
-        method: "POST",
-        body: formData
+        updateLoading("🎵 Preparing audio...", 25);
+
+        const fetchPromise = fetch("/upload-audio", {
+            method: "POST",
+            body: formData
         });
-        
-        const text = await response.text();
 
-        console.log(text);
+        const loadingMessages = [
+            ["🎤 Transcribing speech...", 40],
+            ["🌍 Translating...", 65],
+            ["🗣️ Generating AI Voice...", 90]
+        ];
 
-        if (!response.ok) {
-            throw new Error(text);
-        }
+        let index = 0;
 
-        const result = JSON.parse(text);
+        const loadingInterval = setInterval(() => {
 
-        updateLoading("📝 Transcribing Speech...", 70);
+            if (index < loadingMessages.length) {
 
-        updateLoading("🌍 Translating...", 90);
+                updateLoading(
+                    loadingMessages[index][0],
+                    loadingMessages[index][1]
+                );
 
+                index++;
+
+            }
+
+        }, 2000);
+
+        const response = await Promise.race([
+
+            fetchPromise,
+
+            new Promise((_, reject) =>
+
+                setTimeout(() =>
+
+                    reject(
+                        new Error(
+                            "Request timed out. Please try again."
+                        )
+                    ),
+
+               90000)
+
+            )
+
+        ]);
+
+        clearInterval(loadingInterval);
+
+        const result = await response.json();
+
+        updateLoading("✅ Finished!", 100);
+
+        await new Promise(resolve => setTimeout(resolve, 500));
         hideLoading();
-        if (!result.success) {
+        translateButton.disabled = false;
 
-            alert("Translation failed.");
+        if (!response.ok || !result.success) {
 
+            alert(`❌ ${result.error}`);
             return;
-
         }
 
         document.getElementById("translation-results").style.display = "block";
@@ -114,17 +164,13 @@ translateButton.addEventListener("click", async () => {
         document.getElementById("detected-language").innerText =
          result.detected_language;
         
-        const audioPlayer =
+        const aiAudio =
         document.getElementById("translated-audio");
-
-        audioPlayer.load();
-
-        const aiAudio = document.getElementById("translated-audio");
 
         aiAudio.src = result.voice_url;
         aiAudio.load();
 
-        document.getElementById        ("download-ai-audio").href =
+        document.getElementById("download-ai-audio").href =
         result.voice_url;
 
         // ===============================
@@ -146,10 +192,13 @@ translateButton.addEventListener("click", async () => {
     } catch (error) {
 
         hideLoading();
+        translateButton.disabled = false;
 
         console.error("JavaScript Error:", error);
 
-        alert(error.message);
+        alert(
+            error.message || "Something went wrong."
+        );
 
     }
 

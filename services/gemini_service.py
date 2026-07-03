@@ -27,13 +27,13 @@ class GeminiService:
         api_key=GEMINI_API_KEYS[self.current_key]
         )
 
-    def transcribe_audio(self, audio_path):
+    def transcribe_audio(self, path):
 
         import os
 
-        print("Audio Path:", audio_path)
-        print("File Exists:", os.path.exists(audio_path))
-        print("File Size:", os.path.getsize(audio_path))
+        print("Audio Path:", path)
+        print("File Exists:", os.path.exists(path))
+        print("File Size:", os.path.getsize(path))
         
         # ----------------------------------------
         # Convert recorded WEBM to WAV
@@ -42,28 +42,28 @@ class GeminiService:
         import os
         import subprocess
 
-        extension = os.path.splitext(audio_path)[1].lower()
+        extension = os.path.splitext(path)[1].lower()
 
         if extension != ".wav":
 
-            wav_path = os.path.splitext(audio_path)[0] + ".wav"
+            wav_path = os.path.splitext(path)[0] + ".wav"
 
             subprocess.run([
                 "ffmpeg",
                 "-y",
                 "-i",
-                audio_path,
+                path,
                 wav_path
             ], check=True)
 
             print("Converted to:", wav_path)
 
-            audio_path = wav_path
+            path = wav_path
 
-        print("Converted to:", audio_path)
+        print("Converted to:", path)
         
         uploaded_file = self.client.files.upload(
-            file=audio_path
+            file=path
         )
 
         max_attempts = 15
@@ -98,13 +98,18 @@ class GeminiService:
             )
 
         prompt = """
-        Analyze this audio.
+        Analyze this audio carefully.
+
+        The speaker may mix multiple languages in one sentence
+        (for example Hindi + English, Tamil + English, etc.).
+
+        Preserve names, numbers, abbreviations and English technical terms exactly.
 
         Return ONLY valid JSON.
 
         {
-            "detected_language":"",
-            "transcript":""
+          "detected_language":"",
+          "transcript":""
         }
         """
 

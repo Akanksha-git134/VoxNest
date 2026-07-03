@@ -1,5 +1,6 @@
 from services.gemini_service import GeminiService
 from services.elevenlabs_service import ElevenLabsService
+import os
 
 class TranslationPipeline:
 
@@ -10,44 +11,65 @@ class TranslationPipeline:
 
     def process_audio(
         self,
-        audio_path,
+        path,
         target_language,
         voice_id,
     ):
 
 
-        transcript_data = (
-            self.gemini.transcribe_audio(audio_path)
-        )
-        
-        print("Transcript:", transcript_data["transcript"])
-        print("Translate To:", target_language)
-        
-        translated_text = (
-            self.gemini.translate_text(
-                transcript_data["transcript"],
-                target_language
+        wav_path = os.path.splitext(path)[0] + ".wav"
+
+        try:
+
+            transcript_data = (
+                self.gemini.transcribe_audio(path)
             )
-        )
-        voice_url = self.tts.text_to_speech(
-            translated_text,
-            voice_id
-        )
 
-        return {
+            print("Transcript:", transcript_data["transcript"])
+            print("Translate To:", target_language)
 
-            "success": True,
+            translated_text = (
+                self.gemini.translate_text(
+                    transcript_data["transcript"],
+                    target_language
+                )
+            )
 
-            "detected_language":
-            transcript_data["detected_language"],
+            voice_url = self.tts.text_to_speech(
+                translated_text,
+                voice_id
+            )
 
-            "transcript":
-            transcript_data["transcript"],
+            return {
+
+                "success": True,
+
+                "detected_language":
+                transcript_data["detected_language"],
+
+                "transcript":
+                transcript_data["transcript"],
+
+                "translated_text":
+                translated_text,
+
+                "voice_url":
+                voice_url
+
+            }
+
+        finally:
+
+            if os.path.exists(path):
+
+                os.remove(path)
+
+                print("Deleted:", path)
+
+            if os.path.exists(wav_path):
+
+                os.remove(wav_path)
+
+                print("Deleted:", wav_path)
         
-            "translated_text":
-            translated_text,
-
-            "voice_url":
-            voice_url
-
-}
+        

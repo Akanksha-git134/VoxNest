@@ -2,7 +2,7 @@ from elevenlabs.client import ElevenLabs
 from config import ELEVENLABS_API_KEYS
 
 import os
-
+import uuid
 
 class ElevenLabsService:
 
@@ -31,7 +31,7 @@ class ElevenLabsService:
 
         os.makedirs("static/audio", exist_ok=True)
 
-        filename = "translated_voice.mp3"
+        filename = f"translated_{uuid.uuid4().hex}.mp3"
 
         filepath = os.path.join(
             "static/audio",

@@ -6,6 +6,21 @@ import uuid
 from services.translation_pipeline import TranslationPipeline
 from services.elevenlabs_service import ElevenLabsService
 
+ALLOWED_EXTENSIONS = {
+    "webm",
+    "wav",
+    "mp3",
+    "m4a"
+}
+
+def allowed_file(filename):
+
+    return (
+        "." in filename and
+        filename.rsplit(".", 1)[1].lower()
+        in ALLOWED_EXTENSIONS
+    )
+
 app = Flask(__name__)
 
 app.config["UPLOAD_FOLDER"] = "uploads"
@@ -47,8 +62,6 @@ def upload_audio():
             "message": "No audio received."
         }), 400
 
-    audio = request.files["audio"]
-
     target_language = request.form.get(
         "target_language",
         "English"
@@ -57,8 +70,26 @@ def upload_audio():
     voice_id = request.form.get(
         "voice_id"
     )
-    filename = f"{uuid.uuid4().hex}_{secure_filename(audio.filename)}"
 
+    audio = request.files["audio"]
+
+    if audio.filename == "":
+        return jsonify({
+            "success": False,
+            "error": "No file selected."
+        }), 400
+
+    if not allowed_file(audio.filename):
+
+        return jsonify({
+
+            "success": False,
+            "error":
+            "Unsupported file type. Please upload a     WEBM, WAV, MP3, or M4A file."
+
+        }), 400
+
+    filename = f"{uuid.uuid4().hex}_{secure_filename(audio.filename)}"
     os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
 
     path = os.path.join(
@@ -71,23 +102,61 @@ def upload_audio():
     pipeline = TranslationPipeline()
 
     try:
+
         result = pipeline.process_audio(
             path,
             target_language,
-            voice_id,
+            voice_id
         )
 
         return jsonify(result)
 
     except Exception as e:
-        import traceback
-        
+
         print("ERROR:", e)
-        traceback.print_exc()
+
+        message = str(e)
+
+        if "RESOURCE_EXHAUSTED" in message:
+
+            message = (
+            "Gemini API quota exceeded. "
+            "Please try again in about a minute."
+            )
+        elif "payment_required" in message:
+            message = (
+            "Voice generation is temporarily unavailable."
+            )
+
+
+        elif "paid_plan_required" in message:
+
+            message = (
+            "This AI voice requires a paid ElevenLabs plan."
+            )
+
+        elif "No audio received" in message:
+
+            message = (
+            "No audio file was uploaded."
+            )
+
+        elif "ffmpeg" in message.lower():
+
+            message = (
+            "Unable to process the uploaded audio."
+            )
+
+        elif "timed out" in message.lower():
+            message = (
+                "The request took too long. Please try again."
+            )
 
         return jsonify({
+
             "success": False,
-            "error": str(e)
+            "error": message
+
         }), 500
 
 if __name__ == "__main__":

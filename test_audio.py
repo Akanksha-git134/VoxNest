@@ -4,10 +4,10 @@ import json
 
 client = genai.Client(api_key=GEMINI_API_KEYS[0])
 
-audio_path = "uploads/887c6cd2c3f548b4be09ad737a67694b_translated_fr_3.mp3"
+path = "uploads/887c6cd2c3f548b4be09ad737a67694b_translated_fr_3.mp3"
 
 uploaded_file = client.files.upload(
-    file=audio_path
+    file=path
 )
 
 response = client.models.generate_content(
