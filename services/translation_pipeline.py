@@ -24,6 +24,15 @@ class TranslationPipeline:
             transcript_data = (
                 self.gemini.transcribe_audio(path)
             )
+            
+            detected = transcript_data["detected_language"].strip().lower()
+            target = target_language.strip().lower()
+
+            if detected == target:
+                return {
+                "success": False,
+                "error": "Source and target languages are         the same. Please choose another language."
+            }
 
             print("Transcript:", transcript_data["transcript"])
             print("Translate To:", target_language)

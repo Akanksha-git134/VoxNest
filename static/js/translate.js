@@ -29,18 +29,35 @@ function updateLoading(text, percent) {
 // TRANSLATE BUTTON
 // ===============================
 
-translateButton.addEventListener("click", async () => {
+translateButton.addEventListener("click", async (e) => {
 
+    e.preventDefault();
     console.log("Translate button clicked!");
 
     if (!currentAudio) {
-        alert("Please record or upload an audio file first.");
+        showToast(
+            "Please record or upload an audio file first.",
+            "warning"
+        );
+    }
+    
+    const targetLanguage =
+    document.getElementById("target-language").value;
+
+    if (!targetLanguage) {
+
+        showToast(
+            "Please select a target language.",
+            "warning"
+        );
+
         return;
+
     }
 
     if (currentAudio.size < 10000) {
 
-        alert(
+        showToast(
             "Recording is too short. Please record at least 1 second."
         );
 
@@ -52,15 +69,18 @@ translateButton.addEventListener("click", async () => {
         showLoading();
 
         translateButton.disabled = true;
-        
-        updateLoading("📤 Uploading audio...", 10);
-        updateLoading("🎤 Uploading Audio...", 25);
 
+        translateButton.innerHTML = `
+
+        <i class="bi bi-hourglass-split"></i>
+
+        Processing...
+
+        `;
+        
+        updateLoading("📤 Uploading audio...", 15);
+        
         const formData = new FormData();
-        const targetLanguage =
-        document.getElementById(
-            "target-language"
-        ).value;
 
         console.log("Target Language:", targetLanguage);
 
@@ -78,6 +98,10 @@ translateButton.addEventListener("click", async () => {
             "voice_id",
             document.getElementById("voice-id").value
         );
+        
+        console.log("Uploading:", currentAudio);
+        console.log("Filename:", currentAudio.name);
+        console.log("Type:", currentAudio.type);
 
         formData.append(
             "audio",
@@ -137,21 +161,43 @@ translateButton.addEventListener("click", async () => {
 
         clearInterval(loadingInterval);
 
-        const result = await response.json();
+        let result;
+
+        try {
+
+            result = await response.json();
+
+        }
+
+        catch {
+
+            throw new Error("Server returned an invalid response.");
+
+        }
 
         updateLoading("✅ Finished!", 100);
 
         await new Promise(resolve => setTimeout(resolve, 500));
         hideLoading();
         translateButton.disabled = false;
+        translateButton.innerHTML = "🌿 Translate Voice";
 
         if (!response.ok || !result.success) {
 
-            alert(`❌ ${result.error}`);
+            showToast(result.error, "error");
             return;
         }
 
         document.getElementById("translation-results").style.display = "block";
+
+        document.getElementById("translation-results")
+        .scrollIntoView({
+
+            behavior: "smooth",
+
+            block: "start"
+ 
+        });
 
         document.getElementById("original-text").innerText =
          result.transcript;
@@ -164,14 +210,19 @@ translateButton.addEventListener("click", async () => {
         document.getElementById("detected-language").innerText =
          result.detected_language;
         
-        const aiAudio =
-        document.getElementById("translated-audio");
+        const aiAudio = document.getElementById("translated-audio");
 
-        aiAudio.src = result.voice_url;
+        aiAudio.pause();
+
+        aiAudio.currentTime = 0;
+
+        aiAudio.src = result.voice_url + "?t=" + Date.now();
+
         aiAudio.load();
 
-        document.getElementById("download-ai-audio").href =
-        result.voice_url;
+        const downloadBtn = document.getElementById("download-ai-audio");
+
+        downloadBtn.href = result.voice_url + "?t=" + Date.now();
 
         // ===============================
         // RESET FOR NEXT TRANSLATION
@@ -192,13 +243,33 @@ translateButton.addEventListener("click", async () => {
     } catch (error) {
 
         hideLoading();
+
         translateButton.disabled = false;
+        translateButton.innerHTML = "🌿 Translate Voice";
 
-        console.error("JavaScript Error:", error);
+        console.error(error);
 
-        alert(
-            error.message || "Something went wrong."
-        );
+        let message = "Something went wrong.";
+
+        if (error.message.includes("timed out")) {
+
+            message = "The request timed out. Please try again.";
+
+        }
+
+        else if (error.message.includes("Network")) {
+
+            message = "No internet connection.";
+
+        }
+
+        else if (error.message) {
+
+            message = error.message;
+
+        }
+
+        showToast(message, "error");
 
     }
 

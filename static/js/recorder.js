@@ -203,6 +203,11 @@ uploadInput.addEventListener("change", function(){
 
     currentAudio = file;
 
+    document.querySelector(".supported").innerHTML =
+
+    `<i class="bi bi-check-circle-fill text-success"></i>
+    ${file.name}`;
+
 });
 
 dropZone.addEventListener("dragover", function(e){
@@ -210,6 +215,9 @@ dropZone.addEventListener("dragover", function(e){
     e.preventDefault();
 
     dropZone.style.background="#ECF39E";
+    dropZone.style.borderColor="#4CAF50";
+
+    dropZone.style.transform="scale(1.02)";
 
 });
 
@@ -224,6 +232,8 @@ dropZone.addEventListener("drop", function(e){
     e.preventDefault();
 
     dropZone.style.background="";
+    dropZone.style.borderColor = "";
+    dropZone.style.transform = "";
 
     const file = e.dataTransfer.files[0];
 
@@ -239,20 +249,14 @@ dropZone.addEventListener("drop", function(e){
 
     currentAudio = file;
 
+    document.querySelector(".supported").innerHTML =
+        `<i class="bi bi-check-circle-fill text-success"></i> ${file.name}`;
+
 });
 
 // ===============================
 // SEARCHABLE LANGUAGE DROPDOWNS
 // ===============================
-
-new TomSelect("#source-language", {
-    create: false,
-    sortField: {
-        field: "text",
-        direction: "asc"
-    },
-    placeholder: "Search source language..."
-});
 
 new TomSelect("#target-language", {
     create: false,
@@ -263,5 +267,13 @@ new TomSelect("#target-language", {
     placeholder: "Search target language..."
 });
 
+dropZone.addEventListener("click", (e) => {
+
+    // Don't reopen if the Browse label was clicked
+    if (e.target.closest("label")) return;
+
+    uploadInput.click();
+
+});
 
 

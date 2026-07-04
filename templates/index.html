@@ -38,7 +38,7 @@
 
 <div class="container">
 
-<a class="navbar-brand logo" href="#">
+<a class="navbar-brand logo" href="/">
 
 VoxNest
 
@@ -64,7 +64,7 @@ id="navbarNav">
 
 <li class="nav-item">
 
-<a class="nav-link" href="#">
+<a class="nav-link" href="/">
 
 Home
 
@@ -74,7 +74,7 @@ Home
 
 <li class="nav-item">
 
-<a class="nav-link" href="#">
+<a class="nav-link" href="#features">
 
 Features
 
@@ -94,19 +94,9 @@ Translator
 
 <li class="nav-item">
 
-<a class="nav-link" href="#">
+<a class="nav-link" href="#faq">
 
 About
-
-</a>
-
-</li>
-
-<li class="nav-item">
-
-<a class="nav-link" href="#">
-
-Contact
 
 </a>
 
@@ -168,17 +158,16 @@ Contact
 
                 <div class="hero-buttons mt-5">
 
-                    <a href= "{{ url_for('translator') }}"class="main-btn">
-
+                    <a href="{{ url_for('translator') }}" class="main-btn">
                         Start Translating
 
                     </a>
 
-                    <button class="outline-btn ms-lg-3 mt-3 mt-lg-0">
+                    <a href="#features" class="outline-btn">
 
                         Learn More
 
-                    </button>
+                    </a>
 
                 </div>
 
@@ -609,123 +598,10 @@ Contact
 </section>
 
 <!-- ==========================
-     TRANSLATOR PREVIEW
-========================== -->
-
-<section class="translator-preview py-5" id="preview">
-
-    <div class="container">
-
-        <div class="text-center mb-5">
-
-            <span class="badge-custom">
-                Live Preview
-            </span>
-
-            <h2 class="section-title mt-3">
-                Experience VoxNest
-            </h2>
-
-            <p class="section-subtitle">
-                See how easy multilingual voice translation can be.
-            </p>
-
-        </div>
-
-        <div class="preview-card">
-
-            <div class="record-bar">
-
-                <div class="record-dot"></div>
-
-                Recording...
-
-            </div>
-
-            <div class="waveform">
-
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-
-            </div>
-
-            <div class="mt-4">
-
-                <label>Detected Language</label>
-
-                <input
-                    class="form-control"
-                    value="🇮🇳 Hindi"
-                    readonly>
-
-            </div>
-
-            <div class="mt-3">
-
-                <label>Translate To</label>
-
-                <select class="form-select">
-
-                    <option>English</option>
-
-                    <option>Japanese</option>
-
-                    <option>French</option>
-
-                    <option>German</option>
-
-                </select>
-
-            </div>
-
-            <div class="mt-4">
-
-                <label>Transcript</label>
-
-                <textarea
-                    class="form-control"
-                    rows="4"
-                    readonly>Hello, how are you today?</textarea>
-
-            </div>
-
-            <div class="preview-buttons mt-4">
-
-                <button class="main-btn">
-
-                    <i class="bi bi-play-fill"></i>
-
-                    Play Voice
-
-                </button>
-
-                <button class="outline-btn">
-
-                    <i class="bi bi-download"></i>
-
-                    Download
-
-                </button>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-<!-- ==========================
      LANGUAGES
 ========================== -->
 
-<section class="languages py-5">
+<section class="languages py-5" id = "languages">
 
 <div class="container">
 
@@ -993,7 +869,7 @@ Translate into multiple languages using AI.
 
             </p>
 
-            <a href="#preview" class="main-btn">
+            <a href="{{ url_for('translator') }}" class="main-btn">
 
                 <i class="bi bi-mic-fill"></i>
 
@@ -1036,7 +912,7 @@ Translate into multiple languages using AI.
 
                 <ul>
 
-                    <li><a href="#">Home</a></li>
+                    <li><a href="/">Home</a></li>
 
                     <li><a href="#features">Features</a></li>
 
@@ -1061,22 +937,6 @@ Translate into multiple languages using AI.
                     <li>Flask</li>
 
                 </ul>
-
-            </div>
-
-            <div class="col-lg-3">
-
-                <h5>Follow</h5>
-
-                <div class="social-icons">
-
-                    <a href="#"><i class="bi bi-github"></i></a>
-
-                    <a href="#"><i class="bi bi-linkedin"></i></a>
-
-                    <a href="#"><i class="bi bi-envelope-fill"></i></a>
-
-                </div>
 
             </div>
 

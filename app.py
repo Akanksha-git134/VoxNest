@@ -2,7 +2,6 @@ from flask import Flask, render_template, request, jsonify
 import os
 from werkzeug.utils import secure_filename
 import uuid
-
 from services.translation_pipeline import TranslationPipeline
 from services.elevenlabs_service import ElevenLabsService
 
@@ -10,7 +9,8 @@ ALLOWED_EXTENSIONS = {
     "webm",
     "wav",
     "mp3",
-    "m4a"
+    "m4a", 
+    "ogg"
 }
 
 def allowed_file(filename):
@@ -21,6 +21,7 @@ def allowed_file(filename):
         in ALLOWED_EXTENSIONS
     )
 
+pipeline = TranslationPipeline()
 app = Flask(__name__)
 
 app.config["UPLOAD_FOLDER"] = "uploads"
@@ -72,6 +73,9 @@ def upload_audio():
     )
 
     audio = request.files["audio"]
+    print("=" * 60)
+    print("Incoming filename:", audio.filename)
+    print("=" * 60)
 
     if audio.filename == "":
         return jsonify({
@@ -85,7 +89,7 @@ def upload_audio():
 
             "success": False,
             "error":
-            "Unsupported file type. Please upload a     WEBM, WAV, MP3, or M4A file."
+            "Unsupported file type. Please upload a WEBM, WAV, MP3, or M4A file."
 
         }), 400
 
@@ -99,8 +103,6 @@ def upload_audio():
 
     audio.save(path)
 
-    pipeline = TranslationPipeline()
-
     try:
 
         result = pipeline.process_audio(
@@ -113,41 +115,46 @@ def upload_audio():
 
     except Exception as e:
 
-        print("ERROR:", e)
+        print("=" * 60)
+        print("SERVER ERROR")
+        print(type(e).__name__)
+        print(e)
+        print("=" * 60)
 
-        message = str(e)
+        message = str(e).strip()
+        lower = message.lower()
 
-        if "RESOURCE_EXHAUSTED" in message:
+        if "RESOURCE_EXHAUSTED" in lower:
 
             message = (
             "Gemini API quota exceeded. "
             "Please try again in about a minute."
             )
-        elif "payment_required" in message:
+        elif "payment_required" in lower:
             message = (
             "Voice generation is temporarily unavailable."
             )
 
 
-        elif "paid_plan_required" in message:
+        elif "paid_plan_required" in lower:
 
             message = (
             "This AI voice requires a paid ElevenLabs plan."
             )
 
-        elif "No audio received" in message:
+        elif "No audio received" in lower:
 
             message = (
             "No audio file was uploaded."
             )
 
-        elif "ffmpeg" in message.lower():
+        elif "ffmpeg" in lower:
 
             message = (
             "Unable to process the uploaded audio."
             )
 
-        elif "timed out" in message.lower():
+        elif "timed out" in lower:
             message = (
                 "The request took too long. Please try again."
             )
@@ -158,6 +165,10 @@ def upload_audio():
             "error": message
 
         }), 500
+    
+    finally:
 
+        if os.path.exists(path):
+            os.remove(path)
 if __name__ == "__main__":
     app.run(debug=True)

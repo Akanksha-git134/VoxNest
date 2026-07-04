@@ -244,8 +244,15 @@ and generate natural AI voices.
 
         <p class="supported">
 
-            Supported:
+            <i class="bi bi-file-earmark-music"></i>
+
             MP3 • WAV • M4A • WEBM • OGG
+
+        </p>
+
+        <p class="upload-limit">
+
+            Maximum size: 500 MB
 
         </p>
 
@@ -260,28 +267,9 @@ and generate natural AI voices.
 
     <h2 class="text-center mb-4">
 
-        🌍 Translation Settings
+        🌍 Translation 
 
     </h2>
-
-    <!-- Source Language -->
-
-    <div class="mb-4">
-
-        <label class="form-label fw-bold">
-
-            Source Language
-
-        </label>
-
-        <select
-           id="source-language"
-           class="form-select"
-           title="Source language"
-           aria-label="Source language">
-        </select>
-
-    </div>
 
     <!-- Target Language -->
 
@@ -509,6 +497,8 @@ and generate natural AI voices.
 <script src="{{ url_for('static', filename='js/languages.js') }}"></script>
 
 <script src="{{ url_for('static', filename='js/recorder.js') }}"></script>
+
+<script src="{{ url_for('static', filename='js/toast.js') }}"></script>
 
 <script src="{{ url_for('static', filename='js/translate.js') }}"></script>
 

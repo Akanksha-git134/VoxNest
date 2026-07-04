@@ -1,24 +1,21 @@
-# Python
 __pycache__/
 *.pyc
 
-# Environment
 .env
 
-# Virtual Environment
 venv/
-.env/
+.venv/
 
-# Uploaded files
-uploads/
+uploads/*
+!uploads/.gitkeep
 
-# Generated audio
-static/audio/
-static/generated_audio/
+*.mp3
+*.wav
+*.ogg
+*.webm
+*.m4a
 
-# IDE
+.idea/
 .vscode/
 
-# OS
 .DS_Store
-Thumbs.db

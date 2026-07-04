@@ -81,32 +81,17 @@ const languages = [
 
 ];
 
-const sourceSelect =
-document.getElementById("source-language");
-
-const targetSelect =
-document.getElementById("target-language");
-
-sourceSelect.innerHTML =
-'<option value="Auto Detect">🌐 Auto Detect</option>';
-
-languages.forEach(language => {
-
-    sourceSelect.innerHTML +=
-    `<option value="${language}">
-        ${language}
-    </option>`;
-
-});
+const targetSelect = document.getElementById("target-language");
 
 targetSelect.innerHTML =
 '<option value="">🌍 Select Target Language</option>';
 
 languages.forEach(language => {
 
-    targetSelect.innerHTML +=
-    `<option value="${language}">
-        ${language}
-    </option>`;
+    targetSelect.innerHTML += `
+        <option value="${language}">
+            ${language}
+        </option>
+    `;
 
 });

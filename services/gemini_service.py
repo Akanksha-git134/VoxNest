@@ -131,7 +131,28 @@ class GeminiService:
 
                 if "429" in str(e) or "RESOURCE_EXHAUSTED" in str(e):
 
+                    print("Quota exceeded. Switching API key...")
+
                     self.switch_api_key()
+
+                    # Upload the file again using the NEW API key
+                    uploaded_file = self.client.files.upload(
+                        file=path
+                    )
+
+                    # Wait until Gemini finishes processing
+                    while True:
+
+                        file_info = self.client.files.get(
+                            name=uploaded_file.name
+                        )
+
+                        print("New Upload Status:", file_info.state)
+
+                        if str(file_info.state) == "FileState.ACTIVE":
+                            break
+
+                        time.sleep(2)
 
                 else:
 
@@ -156,13 +177,15 @@ class GeminiService:
         prompt = f"""
         You are a professional translator.
 
-        Translate the following text into {target_language}.
+        Translate the following text into         {target_language}.
 
         Rules:
-        - Only return the translated text.
-        - Do not explain anything.
-        - Preserve names and numbers.
-        - Keep the meaning natural.
+        - Preserve the original meaning exactly.
+        - Keep the translation natural and fluent.
+        - Be consistent in terminology.
+        - Preserve names, numbers, brands, and technical terms.
+        - Do not add or remove information.
+        - Return ONLY the translated text.
 
         Text:
         {transcript}
