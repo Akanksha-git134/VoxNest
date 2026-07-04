@@ -19,3 +19,6 @@ uploads/*
 .vscode/
 
 .DS_Store
+
+#Logs
+.log

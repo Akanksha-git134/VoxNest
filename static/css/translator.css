@@ -10,7 +10,7 @@ background:#f8faf8;
 
 .translator-navbar{
 
-background:white;
+background:var(--card);
 
 padding:18px 0;
 
@@ -56,7 +56,7 @@ color:#132A13;
 
 border:none;
 
-background:white;
+background:var(--card);
 
 width:45px;
 
@@ -84,13 +84,13 @@ margin-top:20px;
 
 max-width:700px;
 
-margin:auto;
+margin:0 auto;
 
 margin-top:20px;
 
 font-size:18px;
 
-color:#666;
+color:var(--text-light);
 
 line-height:1.8;
 
@@ -101,11 +101,11 @@ line-height:1.8;
 
 .record-card{
 
-    background:white;
+    background:var(--card);
 
     max-width:850px;
 
-    margin:auto;
+    margin:0 auto;
 
     padding:50px;
 
@@ -121,7 +121,7 @@ line-height:1.8;
 
     height:120px;
 
-    margin:auto;
+    margin:0 auto;
 
     border-radius:50%;
 
@@ -145,7 +145,7 @@ line-height:1.8;
 
 .record-text{
 
-    color:#666;
+    color:var(--text-light);
 
     margin-top:15px;
 
@@ -187,7 +187,7 @@ line-height:1.8;
     background: white;
     color: #31572C;
     border: 2px solid #31572C;
-    transition: 0.3s;
+    transition:var(--transition);
 }
 
 .record-buttons .outline-btn:hover{
@@ -212,7 +212,7 @@ line-height:1.8;
     align-items: center;
     gap: 8px;
 
-    transition: 0.3s;
+    transition:var(--transition);
 }
 
 .start-btn:hover{
@@ -251,11 +251,11 @@ line-height:1.8;
 
 .preview-card{
 
-    background:white;
+    background:var(--card);
 
     max-width:850px;
 
-    margin:auto;
+    margin:0 auto;
 
     padding:45px;
 
@@ -305,11 +305,11 @@ audio{
 
 .upload-card{
 
-    background:white;
+    background:var(--card);
 
     max-width:850px;
 
-    margin:auto;
+    margin:0 auto;
 
     padding:50px;
 
@@ -329,7 +329,7 @@ audio{
 
     text-align:center;
 
-    transition:.3s;
+    transition:var(--transition);
 
     cursor:pointer;
 
@@ -382,7 +382,7 @@ audio{
     text-decoration: none;
     cursor: pointer;
 
-    transition: all 0.3s ease;
+    transition:var(--transition);
 }
 
 .browse-btn:hover{
@@ -396,9 +396,9 @@ audio{
 ========================== */
 
 .language-card{
-    background:white;
+    background:var(--card);
     max-width:850px;
-    margin:auto;
+    margin:0 auto;
     padding:45px;
     border-radius:30px;
     box-shadow:0 15px 40px rgba(0,0,0,.08);
@@ -416,7 +416,7 @@ audio{
     padding:12px 18px;
     border-radius:15px;
     cursor:pointer;
-    transition:.3s;
+    transition:var(--transition);
     color:#132A13;
     font-weight:600;
 }
@@ -438,7 +438,7 @@ audio{
     border-radius:50px;
     font-size:18px;
     font-weight:600;
-    transition:.3s;
+    transition:var(--transition);
 }
 
 .translate-btn:hover{
@@ -489,11 +489,11 @@ audio{
 
 .results-card{
 
-    background:white;
+    background:var(--card);
 
     max-width:900px;
 
-    margin:auto;
+    margin:0 auto;
 
     padding:50px;
 
@@ -533,7 +533,7 @@ audio{
 
     line-height:1.8;
 
-    color:#333;
+    color:var(--text);
 
 }
 /* ==========================
@@ -564,7 +564,7 @@ audio{
 
     max-width:90%;
 
-    background:white;
+    background:var(--card);
 
     border-radius:25px;
 
@@ -622,7 +622,7 @@ border-radius:12px;
 
 font-weight:600;
 
-transition:.3s;
+transition:var(--transition);
 
 }
 
@@ -656,7 +656,7 @@ opacity:0;
 
 transform:translateX(50px);
 
-transition:.3s;
+transition:var(--transition);
 
 box-shadow:0 10px 25px rgba(0,0,0,.15);
 

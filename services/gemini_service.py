@@ -107,10 +107,21 @@ class GeminiService:
 
         Return ONLY valid JSON.
 
+        Rules:
+        - detected_language MUST be the full English language name.
+        - Never return language codes like "en", "hi", "fr", "de".
+        - Examples:
+          English
+          Hindi
+          Tamil
+          French
+          German
+          Japanese
+
         {
-          "detected_language":"",
-          "transcript":""
-        }
+            "detected_language":"",
+            "transcript":""
+        }        
         """
 
         while True:

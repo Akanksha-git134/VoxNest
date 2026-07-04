@@ -1,200 +1,132 @@
-@media(max-width:992px){
+/* ===========================
+   TABLETS
+=========================== */
 
-.section-title{
+@media (max-width:992px){
 
-font-size:2.4rem;
+    .section-title{
+        font-size:2.4rem;
+    }
 
-}
+    .hero{
+        text-align:center;
+        padding:80px 0;
+    }
 
-}
+    .hero-title{
+        font-size:3rem;
+    }
 
-@media(max-width:768px){
+    .hero-text{
+        max-width:520px;
+        width:100%;
+        margin:0 auto;
+    }
 
-.section-title{
+    .hero-visual{
+        width:320px;
+        height:320px;
+        margin-top:60px;
+    }
 
-font-size:2rem;
+    .hero-circle{
+        width:180px;
+        height:180px;
+        font-size:60px;
+    }
 
-}
-
-.main-btn,
-
-.outline-btn{
-
-width:100%;
-
-margin-bottom:15px;
-
-}
-
-}
-
-@media(max-width:992px){
-
-.hero{
-
-text-align:center;
-
-padding:80px 0;
-
-}
-
-.hero-title{
-
-font-size:3rem;
+    .lang-chip{
+        font-size:.85rem;
+        padding:8px 14px;
+    }
 
 }
 
-.hero-circle{
 
-margin-top:60px;
+/* ===========================
+   MOBILE
+=========================== */
 
-width:240px;
+@media (max-width:768px){
 
-height:240px;
+    .section-title{
+        font-size:2rem;
+    }
 
-font-size:5rem;
+    .main-btn,
+    .outline-btn{
+        width:100%;
+        margin-bottom:15px;
+    }
 
-}
+    .feature-card{
+        padding:28px;
+    }
 
-}
+    .feature-icon{
+        width:70px;
+        height:70px;
+        font-size:28px;
+    }
 
-@media(max-width:576px){
+    .step-card{
+        margin-bottom:20px;
+    }
 
-.hero-title{
+    .step-icon{
+        width:75px;
+        height:75px;
+        font-size:30px;
+    }
 
-font-size:2.3rem;
+    .preview-card{
+        padding:25px;
+    }
 
-}
+    .preview-buttons{
+        flex-direction:column;
+    }
 
-.hero-text{
+    .language-chip{
+        padding:12px 20px;
+        font-size:.95rem;
+    }
 
-font-size:1rem;
+    .cta-box{
+        padding:45px 25px;
+    }
 
-}
+    .cta-box h2{
+        font-size:2rem;
+    }
 
-.hero-circle{
-
-width:180px;
-
-height:180px;
-
-font-size:4rem;
-
-}
-
-}
-
-@media(max-width:992px){
-
-.hero-visual{
-
-width:320px;
-
-height:320px;
-
-margin-top:60px;
-
-}
-
-.hero-circle{
-
-width:180px;
-
-height:180px;
-
-font-size:60px;
-
-}
-
-.lang-chip{
-
-font-size:.85rem;
-
-padding:8px 14px;
+    .hero-buttons{
+    gap:14px;
+    }
 
 }
 
-}
 
-@media(max-width:768px){
+/* ===========================
+   SMALL PHONES
+=========================== */
 
-.feature-card{
+@media (max-width:576px){
 
-padding:28px;
+    .hero-title{
+        font-size:2.3rem;
+    }
 
-}
+    .hero-text{
+        font-size:1rem;
+        max-width:100%;
+        padding:0 15px;
+    }
 
-.feature-icon{
-
-width:70px;
-
-height:70px;
-
-font-size:28px;
-
-}
-
-}
-
-@media(max-width:768px){
-
-.step-card{
-
-margin-bottom:20px;
-
-}
-
-.step-icon{
-
-width:75px;
-
-height:75px;
-
-font-size:30px;
-
-}
-
-}
-
-@media(max-width:768px){
-
-.preview-card{
-
-padding:25px;
-
-}
-
-.preview-buttons{
-
-flex-direction:column;
-
-}
-
-}
-@media(max-width:768px){
-
-.language-chip{
-
-padding:12px 20px;
-
-font-size:.95rem;
-
-}
-
-}
-
-@media(max-width:768px){
-
-.cta-box{
-
-padding:45px 25px;
-
-}
-
-.cta-box h2{
-
-font-size:2rem;
-
-}
+    .hero-circle{
+        width:180px;
+        height:180px;
+        font-size:4rem;
+    }
 
 }

@@ -18,11 +18,12 @@ href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.m
 
 <link href="https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.bootstrap5.min.css" rel="stylesheet">
 
+<link rel="stylesheet" href="{{ url_for('static', filename='css/variables.css') }}">
 <link rel="stylesheet"
 href="{{ url_for('static', filename='css/style.css') }}">
-
-<link rel="stylesheet"
-href="{{ url_for('static', filename='css/translator.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/translator.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/animations.css') }}">
 
 </head>
 
@@ -39,16 +40,6 @@ href="{{ url_for('static', filename='css/translator.css') }}">
 Home
 
 </a>
-
-<button
-    id="theme-toggle"
-    type="button"
-    title="Toggle theme"
-    aria-label="Toggle light and dark theme">
-
-<i class="bi bi-moon-fill"></i>
-
-</button>
 
 </div>
 
@@ -503,5 +494,6 @@ and generate natural AI voices.
 <script src="{{ url_for('static', filename='js/translate.js') }}"></script>
 
 <script src="{{ url_for('static', filename='js/copy.js') }}"></script>
+
 
 </body>

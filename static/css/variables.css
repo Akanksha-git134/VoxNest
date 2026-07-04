@@ -32,5 +32,5 @@
     --radius-lg:28px;
 
     /* Transition */
-    --transition:.35s ease;
+    --transition: all .3s ease;
 }
